@@ -20,7 +20,7 @@ const Home = () => {
               Software Developer
             </span>
             <h1 className="h1 mb-6">
-              Hello I'm <br/> 
+              Hello I&apos;m <br/> 
               <span className="text-accent">Dhruv Goyal</span>
             </h1>
             <p className="max-w-[500px] mb-9 text-white/80">
