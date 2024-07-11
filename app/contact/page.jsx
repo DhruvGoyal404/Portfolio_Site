@@ -1,19 +1,4 @@
 "use client"
-// //<Select name="service" onValueChange={(value) => setFormData({ ...formData, service: value })} required>
-// <SelectTrigger className="w-full">
-// <SelectValue placeholder="Select a service" />
-// </SelectTrigger>
-// <SelectContent>
-// <SelectGroup>
-//   <SelectLabel>Select a service</SelectLabel>
-//   <SelectItem value="web-development">Web Development</SelectItem>
-//   <SelectItem value="programming">Programming</SelectItem>
-//   <SelectItem value="ai-ml">AI/ML</SelectItem>
-//   <SelectItem value="ui-ux-design">UI/UX Design</SelectItem>
-// </SelectGroup>
-// </SelectContent>
-// </Select>
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const info = [
   { icon: <FaPhoneAlt />, title: "Phone", description: "8858880050" },
   { icon: <FaEnvelope />, title: "Email", description: "dhruv621999goyal@gmail.com", link: "mailto:dhruv621999goyal@gmail.com" },
-  { icon: <FaMapMarkerAlt />, title: "Address", description: "Lucknow, UP, India.", link: "https://www.google.com/maps/place/Lucknow,+Uttar+Pradesh/@26.8489028,80.7776995,11z/data=!3m1!4b1!4m6!3m5!1s0x399bfd991f32b16b:0x93ccba8909978be7!8m2!3d26.8466937!4d80.946166!16zL20vMDIydHE0?entry=ttu" },
+  { icon: <FaMapMarkerAlt />, title: "Address", description: "Lucknow, UP, India.", link: "https://t.ly/Y20xX" },
 ];
 
 const Contact = () => {
@@ -59,6 +44,10 @@ const Contact = () => {
       newErrors.phone = "Invalid Phone Number";
     }
 
+    if (!formData.service) {
+      newErrors.service = "Please select a service";
+    }
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -75,10 +64,16 @@ const Contact = () => {
 
       if (response.ok) {
         toast.success('Message sent successfully');
-        // Handle success here
+        setFormData({
+          firstname: '',
+          lastname: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: '',
+        });
       } else {
         toast.error('Failed to send message');
-        // Handle failure here
       }
     } catch (error) {
       console.error('Error sending message:', error);
@@ -121,14 +116,22 @@ const Contact = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <Textarea placeholder="Your Message" name="message" value={formData.message} onChange={handleChange} required />
+              {errors.service && <span className="text-red-500">{errors.service}</span>}
+              <Textarea
+                placeholder="Your Message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                required
+                className="h-40" // Adjust the height as needed, e.g., h-40, h-48, etc.
+              />
               <Button type="submit" variant="outline" className="text-white border-white/40 hover:bg-accent hover:border-accent">
                 Send Message
               </Button>
             </form>
           </div>
           {/* info */}
-          <div className="xl:w-[30%] flex flex-col gap-6">
+          {/* <div className="xl:w-[30%] flex flex-col gap-10 ml-10 pl-20">
             <h3 className="text-4xl text-accent">Contact information.</h3>
             <p className="text-white/60">
               Please reach out to me through the following contact information.
@@ -146,7 +149,27 @@ const Contact = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
+          <div className="flex-1 flex items-center xl:justify-end order-1 xl:order-none mb-8 xl:mb-0">
+            <ul className="flex flex-col gap-10">
+              {info.map((item, index) => (
+                <li key={index} className="flex gap-6 items-center">
+                  <div className="text-accent rounded-md flex items-center justify-center w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-[#27272c]">
+                    <div className="text-[28px]">{item.icon}</div>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-white/60">{item.title}</p>
+                    {item.link ? (
+                      <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-accent transition">{item.description}</a>
+                    ) : (
+                      <p className="text-white/60">{item.description}</p>
+                    )}
+            </div>
+      </li>
+    ))}
+  </ul>
+</div>
+
         </div>
       </div>
     </motion.section>
@@ -154,4 +177,3 @@ const Contact = () => {
 };
 
 export default Contact;
-
