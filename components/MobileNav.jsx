@@ -11,6 +11,8 @@ const links = [
   { name: 'resume', path: '/resume' },
   { name: 'work', path: '/work' },
   { name: 'contact', path: '/contact' },
+  { name: 'register', path: '/register'},
+  { name: 'login', path: '/login'},
 ];
 
 const MobileNav = () => {
