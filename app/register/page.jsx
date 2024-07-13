@@ -1,11 +1,10 @@
 // RegisterPage.jsx
-"use client";
-
+"use client"
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../firebaseConfig';
-import { toast } from 'react-toastify'; // Import toast from react-toastify
+import { toast } from 'react-toastify';
 import { collection, addDoc } from 'firebase/firestore';
 
 function RegisterPage() {
@@ -34,13 +33,16 @@ function RegisterPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
       const user = userCredential.user;
 
+      console.log('User created: ', user.uid);
+
       await addDoc(collection(db, "users"), {
         uid: user.uid,
         email: formData.email,
         name: formData.name
       });
 
-      console.log('Registration successful!', userCredential);
+      console.log('Document written to Firestore.');
+
       router.push('/contact');
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
@@ -60,7 +62,7 @@ function RegisterPage() {
   return (
     <div className="flex flex-col items-center top-20 pt-2 min-h-screen">
       <h2 className="text-2xl font-bold mb-4 text-center text-accent">Thankyou for your time!</h2>
-      <div className="max-w-md w-full p-8  shadow-lg rounded-lg bg-[#27272c] text-gray-300">
+      <div className="max-w-md w-full p-8 shadow-lg rounded-lg bg-[#27272c] text-gray-300">
         <h3 className='text-2xl font-bold mb-4 text-center'>Register!</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

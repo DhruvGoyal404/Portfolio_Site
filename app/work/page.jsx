@@ -1,9 +1,9 @@
-// Work.jsx
 "use client"
 import TooltipContent from "@/components/ui/tooltip";
 import { motion } from "framer-motion";
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
+import { BsArrowLeft, BsArrowRight } from 'react-icons/bs';
 import "swiper/css";
 import { BsArrowUpRight, BsGithub } from "react-icons/bs";
 import {
@@ -64,13 +64,23 @@ const projects = [
 
 const Work = () => {
   const [project, setProject] = useState(projects[0]);
+  const [isPrevDisabled, setIsPrevDisabled] = useState(true);
+  const [isNextDisabled, setIsNextDisabled] = useState(false);
+  const swiperRef = useRef(null);
 
   const handleSlideChange = (swiper) => {
-    // get current slide index
     const currentIndex = swiper.activeIndex;
-    // update project state based on current slide index
     setProject(projects[currentIndex]);
+    setIsPrevDisabled(currentIndex === 0);
+    setIsNextDisabled(currentIndex === projects.length - 1);
   };
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      setIsPrevDisabled(swiperRef.current.activeIndex === 0);
+      setIsNextDisabled(swiperRef.current.activeIndex === projects.length - 1);
+    }
+  }, [swiperRef.current]);
 
   return (
     <motion.section
@@ -105,7 +115,6 @@ const Work = () => {
                 {project.stack.map((item, index) => (
                   <li key={index} className="text-xl text-accent">
                     {item.name}
-                    {/* remove the last comma */}
                     {index !== project.stack.length - 1 && ","}
                   </li>
                 ))}
@@ -151,8 +160,9 @@ const Work = () => {
             <Swiper
               spaceBetween={30}
               slidesPerView={1}
-              className="xl:h-[520px] mb-12"
+              className="xl:h-[520px] mb-12 relative z-10"
               onSlideChange={handleSlideChange}
+              onSwiper={(swiper) => {swiperRef.current = swiper}}
             >
               {projects.map((project, index) => (
                 <SwiperSlide key={index} className="w-full">
@@ -174,8 +184,12 @@ const Work = () => {
             </Swiper>
             {/* Slider buttons */}
             <WorkSliderBtns
-              containerStyles="absolute top-0 left-0 mt-4 ml-4"
-              btnStyles="bg-accent hover:bg-accent-hover text-primary text-[22px] w-[44px] h-[44px] flex justify-center items-center transition-all"
+              onPrev={() => swiperRef.current?.slidePrev()}
+              onNext={() => swiperRef.current?.slideNext()}
+              isPrevDisabled={isPrevDisabled}
+              isNextDisabled={isNextDisabled}
+              containerStyles="absolute top-0 w-full h-full flex items-center justify-between px-4 z-20"
+              btnStyles="bg-accent hover:bg-accent-hover text-primary text-[22px] w-[44px] h-[44px] flex justify-center items-center transition-all z-20"
             />
           </div>
         </div>

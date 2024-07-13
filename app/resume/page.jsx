@@ -51,6 +51,11 @@ const experience = {
   items: [
     {
       company: "Creative Computing Society",
+      position: "Core Member",
+      duration: "2024-present",
+    },
+    {
+      company: "Creative Computing Society",
       position: "Executive Member",
       duration: "2023-present",
     },
