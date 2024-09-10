@@ -6,7 +6,7 @@ import Photo from "@/components/Photo";
 import Stats from "@/components/Stats";
 
 const handleDownloadResume = () => {
-  window.open("https://docs.google.com/document/d/1bN2Uyr2JUEW6nv5fybq0xJe25jV37_nMxVleOeMFEbM/edit?usp=sharing", "_blank");
+  window.open("https://drive.google.com/file/d/1tbOSePRNEF6E7xXkhvsqSAWVrpqHM6lR/view?usp=sharing", "_blank");
 };
 
 const Home = () => {
@@ -17,7 +17,7 @@ const Home = () => {
           {/* text */}
           <div className="text-center xl:text-left order-2 xl:order-none">
             <span className="text-xl">
-              Software Developer
+              &lt; &gt; Aspiring Software Developer &lt; / &gt;
             </span>
             <h1 className="h1 mb-6">
               Hello I&apos;m <br/> 
