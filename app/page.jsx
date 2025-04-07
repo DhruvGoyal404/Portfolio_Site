@@ -6,7 +6,7 @@ import Photo from "@/components/Photo";
 import Stats from "@/components/Stats";
 
 const handleDownloadResume = () => {
-  window.open("https://drive.google.com/file/d/1hRxPyHFPk3jM4jovajZ3JUGPipulDlFm/view?usp=sharing", "_blank");
+  window.open("https://drive.google.com/file/d/1tbat0ge7cutxfrLLKkSq_LoQdu-YRH0R/view?usp=sharing", "_blank");
 };
 
 const Home = () => {
